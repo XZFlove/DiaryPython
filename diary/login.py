@@ -2,6 +2,8 @@
 # # -*- coding: utf-8 -*-
 
 import tkinter
+import tkinter.messagebox
+from tkinter import ttk 
 
 class Login(object):
 	def __init__(self, arg):
@@ -18,20 +20,34 @@ class Login(object):
 		self.phoneNumStr.set("Phone Number")
 
 		VerifyCodeStr = tkinter.Variable()
-		VerifyCodeTxt = tkinter.Entry(self.root, textvariable=VerifyCodeStr)
-		VerifyCodeTxt.grid(row=1, column=0)
+		self.verifyCodeTxt = tkinter.Entry(self.root, textvariable=VerifyCodeStr)
+		self.verifyCodeTxt.grid(row=1, column=0)
 		VerifyCodeStr.set("Verify Code")
 
-		GetCode = tkinter.Button(self.root, text="get", command=lambda: print("code:123456"))
-		GetCode.grid(row=1,column=1)
-		# button2.pack()
-
+		GetCodeBtn = tkinter.Button(self.root, text="get", command=self.getCode)
+		GetCodeBtn.grid(row=1,column=1)
+		
 		LoginBtn = tkinter.Button(self.root, text="Login", command=self.login)
 		LoginBtn.grid(row=2,column=0,pady = 10)
+
+		# 创建下拉菜单
+		self.cmb = ttk.Combobox(self.root,state='readonly')
+		self.cmb['value'] = ('上海','北京','天津','广州')
+		self.cmb.current(0)
+		self.cmb.grid(row=3,column=0,pady=10)
+		self.cmb.bind("<<ComboboxSelected>>",self.comboboxSelected)
 		pass
 
-	def login(object):
+	def login(self):
+		print("+++++++++++Login",self.phoneNumStr.get())
+		pass
 
+	def getCode(self):
+		tkinter.messagebox.showinfo(title='VerifyCode', message='your VerifyCode is 123456') 
+		print("+++++++++++getCode")
+		pass
+	def comboboxSelected(self,*args):
+		print("+++++:",self.cmb.get())
 		pass
 
 	pass
